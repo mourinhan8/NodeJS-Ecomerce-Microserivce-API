@@ -1,4 +1,4 @@
-require('dotenv').config({ path: process.env.NODE_ENV == 'dev' ? `.env.${process.env.NODE_ENV}` : `.env` });
+require('dotenv').config({ path: process.env.NODE_ENV === 'dev' ? `.env.${process.env.NODE_ENV}` : `.env` });
 
 const config = {
   currentEnv: {

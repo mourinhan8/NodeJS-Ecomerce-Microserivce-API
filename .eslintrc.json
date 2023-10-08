@@ -13,9 +13,10 @@
   "rules": {
     "no-console": "off",
     "prettier/prettier": "error",
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "dependencies": true}],
     "import/extensions": "off",
     "import/no-unresolved": "off",
-    "security/detect-object-injection": "off"
+    "security/detect-object-injection": "off",
+    "@typescript-eslint/no-unused-vars": ["warn"]
   }
 }
