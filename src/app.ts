@@ -1,11 +1,10 @@
 import { checkOverload } from './helpers/checkConnect';
-import express, { Request, Response } from 'express';
+import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import compression from 'compression';
 import mongoose from './dbs/init.mongodb';
-
-require('dotenv').config({ path: process.env.NODE_ENV === 'dev' ? `.env.${process.env.NODE_ENV}` : `.env` });
+import router from './routes';
 
 const app = express();
 
@@ -19,13 +18,7 @@ mongoose
 // checkOverload()
 
 // init route
-app.get('/', (req: Request, res: Response) => {
-  const strCompress = 'Hello world';
+app.use('/', router);
 
-  res.status(200).json({
-    message: 'Hello World',
-    metadata: strCompress.repeat(10000),
-  });
-});
 
 export default app;

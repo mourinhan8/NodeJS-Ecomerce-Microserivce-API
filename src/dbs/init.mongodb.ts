@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 import { countConnect } from '../helpers/checkConnect';
+import config from '../configs/app.config';
 
-const connectionString = `mongodb://localhost:27017/shopDev?directConnection=true&authSource=admin`;
+const connectionString = config.mongo.url;
 
 class Database {
   static instance: any;

@@ -3,7 +3,17 @@
     "browser": true,
     "es2021": true
   },
-  "extends": ["airbnb-base", "prettier"],
+  "extends": [
+    "airbnb-base",
+    "prettier",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "eslint-config-prettier",
+    "plugin:security/recommended",
+    "plugin:prettier/recommended"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -11,12 +21,19 @@
   },
   "plugins": ["@typescript-eslint", "prettier", "security"],
   "rules": {
+    "func-names": "off",
     "no-console": "off",
     "prettier/prettier": "error",
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "dependencies": true}],
+    "@typescript-eslint/no-inferrable-types": "off",
+    "@typescript-eslint/no-empty-interface": ["warn"],
     "import/extensions": "off",
     "import/no-unresolved": "off",
     "security/detect-object-injection": "off",
-    "@typescript-eslint/no-unused-vars": ["warn"]
+    "@typescript-eslint/no-unused-vars": ["warn"],
+    "@typescript-eslint/no-explicit-any": ["warn"],
+    "@typescript-eslint/no-var-requires": "off",
+    "no-empty-pattern": "warn",
+    "no-unsafe-optional-chaining": "warn",
+    "no-useless-escape": "off"
   }
 }
