@@ -23,7 +23,17 @@
   "rules": {
     "func-names": "off",
     "no-console": "off",
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "quoteProps": "consistent",
+        "singleQuote": true,
+        "tabWidth": 2,
+        "trailingComma": "ES6",
+        "useTabs": false,
+        "endOfLine": "auto"
+      }
+    ],
     "@typescript-eslint/no-inferrable-types": "off",
     "@typescript-eslint/no-empty-interface": ["warn"],
     "import/extensions": "off",
@@ -34,6 +44,7 @@
     "@typescript-eslint/no-var-requires": "off",
     "no-empty-pattern": "warn",
     "no-unsafe-optional-chaining": "warn",
-    "no-useless-escape": "off"
+    "no-useless-escape": "off",
+    "enforceForClassFields": false
   }
 }

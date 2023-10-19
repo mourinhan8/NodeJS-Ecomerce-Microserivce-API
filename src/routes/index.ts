@@ -1,14 +1,15 @@
 import express, { Request, Response } from 'express';
+import accessRouter from './access'
+import { apiKey, permission } from '../auth/checkAuth';
 
 const router = express.Router();
 
-router.get('/', (req: Request, res: Response) => {
-  const strCompress = 'Hello world';
+// check ApiKey
+router.use(apiKey);
 
-  res.status(200).json({
-    message: 'Hello World',
-    metadata: strCompress.repeat(10000),
-  });
-});
+// check Permission
+router.use(permission('0000'));
+
+router.use('/shop', accessRouter)
 
 export default router;
