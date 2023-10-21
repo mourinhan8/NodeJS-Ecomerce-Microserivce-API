@@ -56,18 +56,12 @@ class AccessService {
       const tokens = await createTokenPair({ userId: newShop._id, email }, publicKeyObject, privateKeyObject);
 
       return {
-        code: 201,
-        metadata: {
-          shop: getIntoData({ fields: ['_id', 'name', 'email'], object: newShop }),
-          tokens,
-        },
+        shop: getIntoData({ fields: ['_id', 'name', 'email'], object: newShop }),
+        tokens,
       };
     }
 
-    return {
-      code: 200,
-      metadata: null,
-    };
+    return null;
   };
 }
 
