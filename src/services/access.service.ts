@@ -4,7 +4,7 @@ import crypto from 'node:crypto';
 import KeyTokenService from './keyToken.service';
 import { createTokenPair, verifyJWT } from '../auth/authUtils';
 import { getIntoData } from '../utils';
-import { AuthFailureError, BadRequestError } from '../core/error.response';
+import { AuthFailureError, BadRequestError, ForbiddenError } from '../core/error.response';
 import { findByEmail } from './shop.service';
 
 const RoleShop = {
@@ -16,13 +16,49 @@ const RoleShop = {
 
 class AccessService {
   static handlerRefreshToken = async (refreshToken) => {
+    // check xem token da duoc su dung chua
     const foundToken = await KeyTokenService.findByRefreshTokenUsed(refreshToken);
+    // neu co
     if (foundToken) {
       // decode xem may la thang nao?
-      const decoded = verifyJWT(refreshToken, foundToken.privateKey);
-      console.log(decoded);
-      // xoa
+      const decoded: any = verifyJWT(refreshToken, foundToken.privateKey);
+      const { userId, email } = decoded;
+      // xoa tat ca token trong keyStore
+      await KeyTokenService.deleteKeyById(userId);
+      throw new ForbiddenError('Something wrong happened !! Please re-login');
     }
+    // NO, qua ngon
+    const holderToken = await KeyTokenService.findByRefreshToken(refreshToken);
+    if (!holderToken) {
+      throw new AuthFailureError('Shop not registered');
+    }
+    // verify token
+    const { userId, email }: any = verifyJWT(refreshToken, holderToken.privateKey);
+    // check userId
+    const foundShop = await findByEmail({ email });
+    if (!foundShop) {
+      throw new AuthFailureError('Shop not registered');
+    }
+    const tokens = await createTokenPair(
+      { userId: foundShop._id, email },
+      holderToken.publicKey,
+      holderToken.privateKey
+    );
+
+    // update token
+    await holderToken.updateOne({
+      $set: {
+        refreshToken: tokens.refreshToken,
+      },
+      $addToSet: {
+        refreshTokensUsed: refreshToken, // da duoc su dung de lay token moi roi
+      },
+    });
+
+    return {
+      user: { userId, email },
+      tokens,
+    };
   };
 
   static logout = async ({ keyStore }) => {

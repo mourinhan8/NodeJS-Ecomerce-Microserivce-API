@@ -11,13 +11,13 @@ class ErrorResponse extends Error {
 }
 
 export class ConflictRequestError extends ErrorResponse {
-  constructor(message = ReasonPhases.CONFLICT, statusCode = StatusCodes.CONFLICT) {
+  constructor(message = ReasonPhases.CONFLICT, statusCode = StatusCodes.FORBIDDEN) {
     super(message, statusCode);
   }
 }
 
 export class BadRequestError extends ErrorResponse {
-  constructor(message = ReasonPhases.FORBIDDEN, statusCode = StatusCodes.FORBIDDEN) {
+  constructor(message = ReasonPhases.CONFLICT, statusCode = StatusCodes.FORBIDDEN) {
     super(message, statusCode);
   }
 }
@@ -31,6 +31,12 @@ export class AuthFailureError extends ErrorResponse {
 
 export class NotFoundError extends ErrorResponse {
   constructor(message = ReasonPhases.NOT_FOUND, statusCode = StatusCodes.NOT_FOUND) {
+    super(message, statusCode);
+  }
+}
+
+export class ForbiddenError extends ErrorResponse {
+  constructor(message = ReasonPhases.FORBIDDEN, statusCode = StatusCodes.FORBIDDEN) {
     super(message, statusCode);
   }
 }
