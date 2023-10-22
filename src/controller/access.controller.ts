@@ -1,7 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
 import AccessService from '../services/access.service';
-import { OK, CREATED } from '../core/success.response';
+import { OK, CREATED, SuccessResponse } from '../core/success.response';
 export default class AccessController {
+  static logout = async (req: Request, res: Response, next: NextFunction) => {
+    new SuccessResponse({
+      metadata: await AccessService.logout({ keyStore: req['keyStore'] }),
+      message: 'Logout success!',
+    }).send(res);
+  };
+
+  static login = async (req: Request, res: Response, next: NextFunction) => {
+    new SuccessResponse({ metadata: await AccessService.login(req.body) }).send(res);
+  };
+
   static signUp = async (req: Request, res: Response, next: NextFunction) => {
     /*
       200 OK
@@ -9,7 +20,7 @@ export default class AccessController {
     */
 
     new CREATED({
-      message: 'Registed OK!',
+      message: 'Registered OK!',
       metadata: await AccessService.signUp(req.body),
       options: {
         limit: 10,

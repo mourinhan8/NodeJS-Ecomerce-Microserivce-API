@@ -43,9 +43,3 @@ export const permission = (permission) => {
     return next();
   };
 };
-
-export const asyncHandle = (fn) => {
-  return (req: Request, res: Response, next) => {
-    fn(req, res, next).catch(next);
-  };
-};

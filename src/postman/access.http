@@ -1,3 +1,10 @@
 @url_dev=http://localhost:4004
 
-GET {{url_dev}}
+POST  {{url_dev}}/shop/logineee
+Content-Type: application/json
+X-Api-Key: b802a5cff0ebda3d0ade4c4bcc676ea7d7ef61283513b42fee3912bfb8333c03a52be3084480cd7d0dbb404c4aae1e579d1026da6a4bb2e4c33952c55f899dcb
+
+{
+  "email": "shoptipsjs06@gmail.com",
+  "password": "abc123"
+}
