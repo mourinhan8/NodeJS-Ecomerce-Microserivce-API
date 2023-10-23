@@ -4,10 +4,15 @@ import { OK, CREATED, SuccessResponse } from '../core/success.response';
 export default class AccessController {
   static handlerRefreshToken = async (req: Request, res: Response, next: NextFunction) => {
     new SuccessResponse({
-      metadata: await AccessService.handlerRefreshToken(req.body.refreshToken),
+      metadata: await AccessService.handlerRefreshTokenV2({
+        refreshToken: req?.['refreshToken'],
+        user: req?.['user'],
+        keyStore: req?.['keyStore'],
+      }),
       message: 'Get token success',
     }).send(res);
   };
+
   static logout = async (req: Request, res: Response, next: NextFunction) => {
     new SuccessResponse({
       metadata: await AccessService.logout({ keyStore: req['keyStore'] }),

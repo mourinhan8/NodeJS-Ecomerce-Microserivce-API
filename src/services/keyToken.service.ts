@@ -16,11 +16,11 @@ export default class KeyTokenService {
       },
       options = { upsert: true, new: true };
     const tokens = await keyTokenModel.findOneAndUpdate(filter, update, options);
-    return tokens ? { publicKey: tokens.publicKey, privateKey: tokens.privateKey } : null;
+    return tokens ? tokens : null;
   };
 
   static findByUserId = async (userId) => {
-    return await keyTokenModel.findOne({ user: new Types.ObjectId(userId) }).lean();
+    return await keyTokenModel.findOne({ user: new Types.ObjectId(userId) });
   };
 
   static removeKeyById = async (id) => {
